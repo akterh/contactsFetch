@@ -2,6 +2,7 @@ package com.example.contacts
 
 import android.Manifest
 import android.content.ContentResolver
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Build.VERSION_CODES.M
@@ -12,6 +13,11 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 
 class MainActivity : AppCompatActivity() {
     lateinit var loadContacts : ImageView
@@ -88,6 +94,23 @@ class MainActivity : AppCompatActivity() {
                                     builder.append("Contact: ").append(name).append(", Phone Number: ").append(
                                             phoneNumValue).append("\n\n")
                                     Log.d("Name ===>",phoneNumValue);
+
+
+
+                                    val baseUrl =
+                                            "http://192.168.0.104/salesWeb/contacts.php?name=$name&phone=$phoneNumValue"
+
+                                    val rq: RequestQueue = Volley.newRequestQueue(this)
+                                    val stringRequest = StringRequest(Request.Method.GET,baseUrl, { response ->response
+
+
+
+                                    }, { error->
+                                        Toast.makeText(this,error.message, Toast.LENGTH_SHORT).show()
+
+
+                                    })
+                                    rq.add(stringRequest)
 
 
 
